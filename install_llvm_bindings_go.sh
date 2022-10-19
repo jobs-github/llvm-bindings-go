@@ -24,13 +24,8 @@ if [[ "$LLVM_CONFIG" == "" ]]; then
     LLVM_CONFIG="llvm-config"
     case "$OSTYPE" in
         darwin*)
-            BREW_LLVM="$(ls -1 /usr/local/Cellar/llvm/*/bin/llvm-config | tail -1)"
-            if [[ "$BREW_LLVM" != "" ]]; then
-                LLVM_CONFIG="$BREW_LLVM"
-                # libffi is needed to build Go bindings
-                CGO_LDFLAGS="$CGO_LDFLAGS -L/usr/local/opt/libffi/lib -lffi"
-                echo "Detected LLVM installed with Homebrew: $BREW_LLVM"
-            fi
+            # libffi is needed to build Go bindings
+            CGO_LDFLAGS="$CGO_LDFLAGS -L/usr/local/opt/libffi/lib -lffi"
             ;;
     esac
 fi
